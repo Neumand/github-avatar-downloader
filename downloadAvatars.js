@@ -2,14 +2,14 @@ var https = require('https');
 var request = require('request');
 var fs = require('fs');
 var token = require('./secrets');
-var repoOwner = process.argv[2];
-var repoName = process.argv[3];
+var repoOwner = process.argv.slice(2)[0];
+var repoName = process.argv.slice(2)[1];
 console.log('Welcome to the GitHub Avatar Downloader!');
 
 function getRepoContributors(repoOwner, repoName, cb) {
   if (!repoOwner || !repoName) {
     console.log("Error: please input the repo owner and repo name as command line arguments.");
-  }
+  } else {
   var options = {
     url: 'https://api.github.com/repos/' + repoOwner + '/' + repoName + "/contributors",
     headers: {
@@ -22,7 +22,7 @@ function getRepoContributors(repoOwner, repoName, cb) {
       for (var each in parsedBody) {
         cb(parsedBody[each]["avatar_url"], `avatars/${each.login}.jpg`);
       }
-    });
+    })};
 }
 
 function downloadImageByURL(url, filePath) {
