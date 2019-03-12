@@ -7,6 +7,9 @@ var repoName = process.argv[3];
 console.log('Welcome to the GitHub Avatar Downloader!');
 
 function getRepoContributors(repoOwner, repoName, cb) {
+  if (!repoOwner || !repoName) {
+    console.log("Error: please input the repo owner and repo name as command line arguments.");
+  }
   var options = {
     url: 'https://api.github.com/repos/' + repoOwner + '/' + repoName + "/contributors",
     headers: {
